@@ -1,425 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AUA Technologies — Bridging Technology, Research and Innovation for Sustainable Impact. Parent company of GIRA Global and PhoneDekho." />
-  <title>AUA Technologies — Bridging Technology, Research &amp; Innovation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230A1628'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='16' font-weight='700' fill='%23C89B3C'>A</text></svg>" />
-</head>
-<body>
+/* =========================================================
+   AUA TECHNOLOGIES — Main JavaScript
+   ========================================================= */
 
-<!-- ══════════════════════ NAVBAR ══════════════════════ -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">
-      <div class="logo-mark">A</div>
-      <span class="logo-name">AUA Technologies</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#ventures">Our Ventures</a></li>
-      <li><a href="#research">Research &amp; Impact</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="https://giraglobal.org" target="_blank" rel="noopener" class="nav-cta-btn">Visit GIRA ↗</a>
-    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+document.addEventListener('DOMContentLoaded', () => {
 
-<!-- ══════════════════════ HERO ══════════════════════ -->
-<section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow-1"></div>
-  <div class="hero-glow-2"></div>
+  /* ── Navbar: scroll behaviour ── */
+  const navbar = document.getElementById('navbar');
+  const scrollThreshold = 60;
 
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-pill">
-        <span class="hero-dot"></span>
-        Est. 2023 &nbsp;·&nbsp; India &amp; United States
-      </div>
-      <h1 class="hero-title">
-        Bridging <em>Technology,</em><br>
-        Research &amp; Innovation<br>
-        for Sustainable Impact
-      </h1>
-      <p class="hero-sub">A dynamic private limited company operating at the vital intersection of technological applications, education, and hands-on training — empowering the next generation of innovators across borders.</p>
-      <div class="hero-btns">
-        <a href="#about" class="btn btn-gold">Explore Our Story →</a>
-        <a href="#contact" class="btn btn-ghost">Partner With Us</a>
-      </div>
-    </div>
+  const onScroll = () => {
+    if (window.scrollY > scrollThreshold) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // run once on load
 
-    <div class="hero-cards">
-      <a href="https://giraglobal.org" target="_blank" rel="noopener" class="hcard">
-        <div class="hcard-icon">🌐</div>
-        <div class="hcard-body">
-          <div class="hcard-tag">Research Arm</div>
-          <div class="hcard-name">GIRA Global</div>
-          <div class="hcard-desc">Global Impact Research Initiative — education, sustainability &amp; research platform.</div>
-          <div class="hcard-link">giraglobal.org →</div>
-        </div>
-      </a>
-      <a href="https://www.phonedekho.com" target="_blank" rel="noopener" class="hcard">
-        <div class="hcard-icon">📱</div>
-        <div class="hcard-body">
-          <div class="hcard-tag">Technology Pilot</div>
-          <div class="hcard-name">PhoneDekho</div>
-          <div class="hcard-desc">Premier digital commerce platform — a live learning laboratory for youth entrepreneurship.</div>
-          <div class="hcard-link">PhoneDekho.com →</div>
-        </div>
-      </a>
-      <div class="hcard hcard-dim">
-        <div class="hcard-icon">🏛️</div>
-        <div class="hcard-body">
-          <div class="hcard-tag">Coming Soon</div>
-          <div class="hcard-name">Knowledge Mobility Centres</div>
-          <div class="hcard-desc">Hubs across India, US, Europe &amp; Africa for cross-border knowledge exchange.</div>
-          <div class="hcard-link" style="color:rgba(255,255,255,0.28);">In Development</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  /* ── Mobile hamburger ── */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks  = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const spans = hamburger.querySelectorAll('span');
+      navLinks.classList.contains('open')
+        ? (spans[0].style.transform = 'rotate(45deg) translate(5px,5px)',
+           spans[1].style.opacity   = '0',
+           spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)')
+        : (spans[0].style.transform = '',
+           spans[1].style.opacity   = '1',
+           spans[2].style.transform = '');
+    });
+    // close on link click
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.querySelectorAll('span').forEach(s => (s.style.transform = '', s.style.opacity = ''));
+      })
+    );
+  }
 
-  <div class="stats-bar">
-    <div class="stat-item"><span class="sn">2023</span><span class="sl">Year Founded</span></div>
-    <div class="stat-item"><span class="sn">2+</span><span class="sl">Active Ventures</span></div>
-    <div class="stat-item"><span class="sn">4</span><span class="sl">Continents Targeted</span></div>
-    <div class="stat-item"><span class="sn">∞</span><span class="sl">Ideas Welcome</span></div>
-  </div>
-</section>
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
 
+  /* ── Reveal on scroll ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-<!-- ══════════════════════ INTRO ══════════════════════ -->
-<section id="intro" class="bg-offwhite pad-xl">
-  <div class="container">
-    <div class="split-grid reveal">
-      <div class="split-sticky">
-        <div class="label-dark">Who We Are</div>
-        <h2 class="title-dark">A Launchpad for <em class="italic-gold">Disruptive Ideas</em> &amp; Sustainable Solutions</h2>
-        <div class="gold-rule"></div>
-        <a href="#about" class="btn btn-outline-dark">Our Full Story →</a>
-      </div>
-      <div class="split-body reveal delay-2">
-        <p class="text-lg-dark">Founded on the principles of transformative innovation, AUA Technologies is a dynamic private limited company dedicated to shaping the future of global industries. We operate at the vital intersection of technological applications, education, and hands-on training.</p>
-        <p class="text-md-dark">Co-founded by a visionary team of cross-border technocrats from India and the United States, our ecosystem is built to address the evolving demands of a digital-first world. By blending technical expertise with academic excellence, AUA Technologies serves as a launchpad for disruptive ideas and sustainable solutions.</p>
-        <p class="text-md-dark">We don't just build systems — we nurture the talent required to run them. Through our specialized ventures, we create a seamless bridge between classroom knowledge and industrial execution, ensuring our technological advancements actively contribute to a smarter global economy.</p>
-        <p class="text-md-dark">At its core, AUA Technologies is an incubator for progress. Under the strategic guidance of renowned academic luminary <strong>Prof. Dr. Urvashi Makkar</strong>, we empower the next generation of thinkers, creators, and entrepreneurs to turn bold ideas into scalable, market-ready realities.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  reveals.forEach(el => revealObserver.observe(el));
 
+  /* ── Animated counter for hero stats ── */
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
 
-<!-- ══════════════════════ ABOUT ══════════════════════ -->
-<section id="about" class="bg-navy pad-xl">
-  <div class="container">
-    <div class="center-header reveal">
-      <div class="label-light">Our Foundation</div>
-      <h2 class="title-light">Where We Began &amp; <em class="italic-gold">Where We're Headed</em></h2>
-      <p class="sub-light">Established in 2023 as a cross-border collaboration between India and the United States, AUA Technologies has rapidly evolved into a robust, multi-vertical global ecosystem.</p>
-    </div>
+  counters.forEach(el => counterObserver.observe(el));
 
-    <div class="two-up reveal">
-      <div class="navy-card">
-        <div class="nc-icon gold-icon">🎯</div>
-        <h3 class="nc-title">Our Mission</h3>
-        <p class="nc-text">To connect technology, education, and research through an integrated global ecosystem that empowers young innovators, solves sustainability challenges, and fosters cross-border knowledge mobility.</p>
-      </div>
-      <div class="navy-card">
-        <div class="nc-icon blue-icon">🔭</div>
-        <h3 class="nc-title">Our Vision</h3>
-        <p class="nc-text">To become a premier global destination for start-up mentoring, impactful research, and technology-driven training — transforming bright ideas into sustainable international enterprises.</p>
-      </div>
-    </div>
+  function animateCounter(el) {
+    const target   = parseFloat(el.getAttribute('data-count'));
+    const suffix   = el.getAttribute('data-suffix') || '';
+    const prefix   = el.getAttribute('data-prefix') || '';
+    const duration = 1600;
+    const steps    = 60;
+    const increment = target / steps;
+    let current = 0;
+    let step = 0;
 
-    <div class="values-wrap reveal">
-      <p class="values-eyebrow">Core Values</p>
-      <div class="four-up">
-        <div class="val-card">
-          <div class="val-num">01</div>
-          <h4 class="val-title">Innovation</h4>
-          <p class="val-text">Constantly pushing technical and educational boundaries to create smarter solutions.</p>
-        </div>
-        <div class="val-card">
-          <div class="val-num">02</div>
-          <h4 class="val-title">Collaboration</h4>
-          <p class="val-text">Bridging international borders and the divides between industry and academia.</p>
-        </div>
-        <div class="val-card">
-          <div class="val-num">03</div>
-          <h4 class="val-title">Empowerment</h4>
-          <p class="val-text">Equipping young minds with the practical tools, training, and platforms to succeed.</p>
-        </div>
-        <div class="val-card">
-          <div class="val-num">04</div>
-          <h4 class="val-title">Sustainability</h4>
-          <p class="val-text">Ensuring our technological and business practices foster long-term global equity.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    const isFloat = target !== Math.floor(target);
 
+    const timer = setInterval(() => {
+      step++;
+      current = increment * step;
+      if (step >= steps) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
+    }, duration / steps);
+  }
 
-<!-- ══════════════════════ VENTURES ══════════════════════ -->
-<section id="ventures" class="bg-white pad-xl">
-  <div class="container">
-    <div class="vent-head">
-      <div class="reveal">
-        <div class="label-dark">Our Ecosystem</div>
-        <h2 class="title-dark">Technology Ventures <em class="italic-gold">&amp; Platforms</em></h2>
-      </div>
-      <div class="reveal delay-2">
-        <p class="text-lg-dark">Each venture under AUA Technologies serves as a live laboratory — testing real-world models while building the entrepreneurial skills of tomorrow's leaders.</p>
-        <a href="#contact" class="btn btn-outline-dark" style="margin-top:1.5rem;">Pitch Your Idea →</a>
-      </div>
-    </div>
+  /* ── Contact form: basic UX ── */
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
 
-    <div class="vc-row reveal">
-      <a href="https://giraglobal.org" target="_blank" rel="noopener" class="vc-card vc-navy">
-        <div class="vc-shine"></div>
-        <div class="vc-body">
-          <span class="vc-badge">Research Arm · giraglobal.org</span>
-          <h3 class="vc-title">GIRA Global</h3>
-          <p class="vc-desc">The Global Impact Research Initiative is our dedicated education, sustainability, and research arm. GIRA produces high-impact, actionable academic and industrial research aimed at solving critical global challenges — connecting international researchers, scholars, and industry professionals.</p>
-          <span class="vc-link-btn">Explore GIRA Global →</span>
-        </div>
-      </a>
-      <a href="https://www.phonedekho.com" target="_blank" rel="noopener" class="vc-card vc-deep">
-        <div class="vc-shine"></div>
-        <div class="vc-body">
-          <span class="vc-badge">Technology Pilot · PhoneDekho.com</span>
-          <h3 class="vc-title">PhoneDekho</h3>
-          <p class="vc-desc">AUA's premier innovative technology pilot and live learning laboratory for digital commerce. By analyzing consumer behavior, supply chains, and digital integration in real-time, PhoneDekho directly aligns with our mission of linking technical application with entrepreneurial training.</p>
-          <span class="vc-link-btn">Visit PhoneDekho.com →</span>
-        </div>
-      </a>
-    </div>
+      // Simulate send (replace with real backend / Formspree / EmailJS)
+      setTimeout(() => {
+        btn.textContent = '✓ Message Sent!';
+        btn.style.background = '#2a9d5c';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = 'Send Message →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 3000);
+      }, 1200);
+    });
+  }
 
-    <div class="future-strip reveal">
-      <div class="future-strip-left">
-        <span class="vc-badge-dark">Open Call · Future Start-ups</span>
-        <h3 class="future-h">Build the Next Big Thing With Us</h3>
-        <p class="future-p">Great innovations start with a single, bold idea. AUA Technologies extends an open invitation to all young innovators, dreamers, and technocrats to test, refine, and launch their business concepts within our supportive ecosystem. We provide mentorship, real-world data, structural frameworks, and proof-of-concept testing.</p>
-        <a href="#contact" class="btn btn-navy" style="margin-top:1.5rem;">Submit Your Concept →</a>
-      </div>
-      <div class="future-strip-right">
-        <div class="ftags">
-          <span class="ftag">🧭 Mentorship</span>
-          <span class="ftag">📊 Real-World Data</span>
-          <span class="ftag">🏗️ Frameworks</span>
-          <span class="ftag">🌍 Global Network</span>
-          <span class="ftag">💡 PoC Testing</span>
-          <span class="ftag">🚀 Market Access</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  /* ── Active nav link highlight on scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
 
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navAnchors.forEach(a => {
+          a.style.color = a.getAttribute('href') === `#${id}`
+            ? 'var(--gold-light)'
+            : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
 
-<!-- ══════════════════════ RESEARCH ══════════════════════ -->
-<section id="research" class="bg-offwhite pad-xl">
-  <div class="container">
-    <div class="label-dark reveal">Research &amp; Impact</div>
+  sections.forEach(s => sectionObserver.observe(s));
 
-    <div class="gira-block reveal">
-      <div class="gira-l">
-        <div class="label-gold">GIRA — Global Impact Research Initiative</div>
-        <h2 class="title-dark">Where Scientific Inquiry Meets <em class="italic-gold">Real-World Execution</em></h2>
-        <p class="text-md-dark" style="margin-top:1.2rem;">GIRA is the dedicated education, sustainability, and research arm of AUA Technologies. By connecting international researchers, scholars, and industry professionals, the initiative fosters a robust repository of knowledge dedicated to sustainable development and socio-economic progress.</p>
-        <p class="text-md-dark" style="margin-top:1rem;">GIRA bridges the gap between scientific inquiry and real-world execution, ensuring that academic breakthroughs translate into practical policies and technologies that improve lives globally.</p>
-        <a href="https://giraglobal.org" target="_blank" rel="noopener" class="btn btn-gold" style="margin-top:2rem;">Explore Our Research →</a>
-      </div>
-      <div class="gira-r">
-        <div class="gira-emblem">
-          <span class="gira-big">GIRA</span>
-          <span class="gira-fullname">Global Impact Research Initiative</span>
-          <div class="gira-line"></div>
-          <span class="gira-sub">A Venture of AUA Technologies</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="gkmc-block reveal">
-      <div class="gkmc-l">
-        <div class="label-dark">Future Expansion</div>
-        <h3 class="gkmc-title">Global Knowledge Mobility Centres</h3>
-        <p class="text-md-dark" style="margin-top:1rem;">AUA Technologies is preparing to establish Global Knowledge Mobility Centres across India, the United States, Europe, and Africa. These centres will serve as physical and digital hubs for student mobility, exchange programs, and international start-up mentoring through strategic international joint ventures.</p>
-        <p class="text-md-dark" style="margin-top:1rem;">By providing specialized knowledge services and resources, these mobility centres will champion cross-border business acceleration and develop scalable solutions to meet urgent global sustainability goals.</p>
-      </div>
-      <div class="gkmc-r">
-        <div class="regions">
-          <div class="region-item"><span>🇮🇳</span> India</div>
-          <div class="region-item"><span>🇺🇸</span> United States</div>
-          <div class="region-item"><span>🇪🇺</span> Europe</div>
-          <div class="region-item"><span>🌍</span> Africa</div>
-        </div>
-        <a href="#contact" class="btn btn-outline-dark" style="margin-top:1.5rem;">Inquire About Hubs →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════ LEADERSHIP ══════════════════════ -->
-<section id="leadership" class="bg-navymid pad-lg">
-  <div class="container">
-    <div class="leader-wrap reveal">
-      <div class="leader-ava">U</div>
-      <div class="leader-body">
-        <div class="leader-role">Strategic Leadership</div>
-        <div class="leader-name">Prof. Dr. Urvashi Makkar</div>
-        <p class="leader-bio">Under the strategic guidance of renowned academic luminary Prof. Dr. Urvashi Makkar, AUA Technologies empowers the next generation of thinkers, creators, and entrepreneurs. Her extensive leadership brings structural depth and institutional excellence to the company's grand vision — turning bold ideas into scalable, market-ready realities through collaborative mentorship and specialized training programs.</p>
-      </div>
-      <blockquote class="leader-quote">"AUA represents a continuous commitment to research, sustainable growth, and standard-setting innovation."</blockquote>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════ CONTACT ══════════════════════ -->
-<section id="contact" class="bg-white pad-xl">
-  <div class="container">
-    <div class="split-grid">
-      <div class="reveal">
-        <div class="label-dark">Get In Touch</div>
-        <h2 class="title-dark">Partner With Us.<br><em class="italic-gold">Build With Us.</em></h2>
-        <p class="text-lg-dark" style="margin-bottom:2.5rem;">Whether you want to partner with us, pitch an idea, or learn more about our global initiatives — we'd love to hear from you.</p>
-        <div class="cinfo-list">
-          <div class="cinfo-item">
-            <div class="cinfo-icon">📍</div>
-            <div>
-              <div class="cinfo-lbl">Corporate Office</div>
-              <div class="cinfo-val">India Office — Address on Enquiry</div>
-            </div>
-          </div>
-          <div class="cinfo-item">
-            <div class="cinfo-icon">✉️</div>
-            <div>
-              <div class="cinfo-lbl">Email Us</div>
-              <div class="cinfo-val"><a href="mailto:info@auatechnologies.com" class="link-navy">info@auatechnologies.com</a></div>
-            </div>
-          </div>
-          <div class="cinfo-item">
-            <div class="cinfo-icon">🌐</div>
-            <div>
-              <div class="cinfo-lbl">Global Hubs</div>
-              <div class="cinfo-val">Inquire about US, Europe &amp; Africa centres</div>
-            </div>
-          </div>
-          <div class="cinfo-item">
-            <div class="cinfo-icon">🔬</div>
-            <div>
-              <div class="cinfo-lbl">Research Enquiries</div>
-              <div class="cinfo-val"><a href="https://giraglobal.org" target="_blank" rel="noopener" class="link-navy">giraglobal.org</a></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal delay-2">
-        <div class="form-wrap">
-          <h3 class="form-heading">Send Us a Message</h3>
-          <form id="contact-form" novalidate>
-            <div class="form-row-2">
-              <div class="fg">
-                <label>First Name</label>
-                <input type="text" placeholder="Jane" required />
-              </div>
-              <div class="fg">
-                <label>Last Name</label>
-                <input type="text" placeholder="Smith" required />
-              </div>
-            </div>
-            <div class="fg">
-              <label>Email Address</label>
-              <input type="email" placeholder="jane@example.com" required />
-            </div>
-            <div class="fg">
-              <label>Organisation / Institution</label>
-              <input type="text" placeholder="Your company or university" />
-            </div>
-            <div class="fg">
-              <label>I'm interested in…</label>
-              <select>
-                <option value="">Select an option</option>
-                <option>Partnership / Joint Venture</option>
-                <option>Incubating a Start-up Idea</option>
-                <option>Research Collaboration (GIRA)</option>
-                <option>Training / Skill Development</option>
-                <option>Knowledge Mobility Centre</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="fg">
-              <label>Your Message</label>
-              <textarea placeholder="Tell us about your idea or enquiry…"></textarea>
-            </div>
-            <button type="submit" class="btn btn-gold full-w">Send Message →</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══════════════════════ FOOTER ══════════════════════ -->
-<footer id="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo-row">
-          <div class="logo-mark">A</div>
-          <span class="footer-logo-name">AUA Technologies</span>
-        </div>
-        <p class="footer-tagline">Bridging Technology, Research and Innovation for Sustainable Impact. A cross-border ecosystem shaping the future of global industries.</p>
-      </div>
-      <div class="fcol">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#about">Our Mission</a></li>
-          <li><a href="#about">Core Values</a></li>
-          <li><a href="#leadership">Leadership</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>Ventures</h4>
-        <ul>
-          <li><a href="https://giraglobal.org" target="_blank" rel="noopener">GIRA Global ↗</a></li>
-          <li><a href="https://www.phonedekho.com" target="_blank" rel="noopener">PhoneDekho ↗</a></li>
-          <li><a href="#ventures">Future Start-ups</a></li>
-          <li><a href="#research">Knowledge Centres</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="#contact">Contact Us</a></li>
-          <li><a href="mailto:info@auatechnologies.com">info@auatechnologies.com</a></li>
-          <li><a href="#research">Research Enquiries</a></li>
-          <li><a href="#contact">Partner With Us</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2025 AUA Technologies Pvt. Ltd. All rights reserved.</span>
-      <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="main.js"></script>
-</body>
-</html>
+});
